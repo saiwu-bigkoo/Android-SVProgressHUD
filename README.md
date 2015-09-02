@@ -3,7 +3,7 @@ SVProgressHUD For Android
 精仿iOS的提示库 SVProgressHUD，api也几乎一样。
 
 ## Demo
-![](https://github.com/saiwu-bigkoo/Android-AlertView/blob/master/preview/svprogresshuddemo.gif)
+![](https://github.com/saiwu-bigkoo/Android-SVProgressHUD/blob/master/preview/svprogresshuddemo.gif)
 
 demo是用Module方式依赖，你也可以使用gradle 依赖:
 ```java
