@@ -10,59 +10,61 @@ import android.view.View;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 
 public class MainActivity extends Activity {
-
+    private SVProgressHUD mSVProgressHUD;
     int progress = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mSVProgressHUD = new SVProgressHUD(this);
     }
 
     public void show(View view){
-        SVProgressHUD.show(this);
+        mSVProgressHUD.show();
     }
     public void showWithMaskType(View view){
-        SVProgressHUD.showWithMaskType(this, SVProgressHUD.SVProgressHUDMaskType.None);
-//        SVProgressHUD.showWithMaskType(this,SVProgressHUD.SVProgressHUDMaskType.Black);
-//        SVProgressHUD.showWithMaskType(this, SVProgressHUD.SVProgressHUDMaskType.BlackCancel);
-//        SVProgressHUD.showWithMaskType(this, SVProgressHUD.SVProgressHUDMaskType.Clear);
-//        SVProgressHUD.showWithMaskType(this, SVProgressHUD.SVProgressHUDMaskType.ClearCancel);
-//        SVProgressHUD.showWithMaskType(this, SVProgressHUD.SVProgressHUDMaskType.Gradient);
-//        SVProgressHUD.showWithMaskType(this, SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
+        mSVProgressHUD.showWithMaskType(SVProgressHUD.SVProgressHUDMaskType.None);
+//        mSVProgressHUD.showWithMaskType(SVProgressHUD.SVProgressHUDMaskType.Black);
+//        mSVProgressHUD.showWithMaskType(SVProgressHUD.SVProgressHUDMaskType.BlackCancel);
+//        mSVProgressHUD.showWithMaskType(SVProgressHUD.SVProgressHUDMaskType.Clear);
+//        mSVProgressHUD.showWithMaskType(SVProgressHUD.SVProgressHUDMaskType.ClearCancel);
+//        mSVProgressHUD.showWithMaskType(SVProgressHUD.SVProgressHUDMaskType.Gradient);
+//        mSVProgressHUD.showWithMaskType(SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
     }
     public void showWithStatus(View view){
-        SVProgressHUD.showWithStatus(this, "加载中...");
+        mSVProgressHUD.showWithStatus("加载中...");
     }
     public void showInfoWithStatus(View view){
-        SVProgressHUD.showInfoWithStatus(this, "这是提示", SVProgressHUD.SVProgressHUDMaskType.None);
+        mSVProgressHUD.showInfoWithStatus("这是提示", SVProgressHUD.SVProgressHUDMaskType.None);
     }
     public void showSuccessWithStatus(View view){
-        SVProgressHUD.showSuccessWithStatus(this, "恭喜，提交成功！");
+        mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
     }
     public void showErrorWithStatus(View view){
-        SVProgressHUD.showErrorWithStatus(this, "不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
+        mSVProgressHUD.showErrorWithStatus("不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
     }
-    Handler mHandler = new Handler(){
+
+    private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             progress = progress + 5;
-            if (SVProgressHUD.getProgressBar(MainActivity.this).getMax() != SVProgressHUD.getProgressBar(MainActivity.this).getProgress()) {
-                SVProgressHUD.getProgressBar(MainActivity.this).setProgress(progress);
-                SVProgressHUD.setText(MainActivity.this, "进度 "+progress+"%");
+            if (mSVProgressHUD.getProgressBar().getMax() != mSVProgressHUD.getProgressBar().getProgress()) {
+                mSVProgressHUD.getProgressBar().setProgress(progress);
+                mSVProgressHUD.setText("进度 "+progress+"%");
 
                 mHandler.sendEmptyMessageDelayed(0,500);
             }
             else{
-                SVProgressHUD.dismiss(MainActivity.this);
-                SVProgressHUD.getProgressBar(MainActivity.this).setProgress(0);
+                mSVProgressHUD.dismiss();
             }
 
         }
     };
     public void showWithProgress(View view){
-        SVProgressHUD.showWithProgress(this, "进度 "+progress+"%", SVProgressHUD.SVProgressHUDMaskType.Black);
         progress = 0;
+        mSVProgressHUD.getProgressBar().setProgress(progress);//先重设了进度再显示，避免下次再show会先显示上一次的进度位置所以要先将进度归0
+        mSVProgressHUD.showWithProgress("进度 " + progress + "%", SVProgressHUD.SVProgressHUDMaskType.Black);
         mHandler.sendEmptyMessageDelayed(0,500);
     }
 
@@ -71,8 +73,9 @@ public class MainActivity extends Activity {
     {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
         {
-            if(SVProgressHUD.isShowing(this)){
-                SVProgressHUD.dismiss(this);
+            if(mSVProgressHUD.isShowing()){
+                mSVProgressHUD.dismiss();
+                mHandler.removeCallbacksAndMessages(null);
                 return false;
             }
         }

@@ -170,20 +170,20 @@ public class SVCircleProgressBar extends View {
 
     }
 
-    public int getCricleColor() {
+    public int getCircleColor() {
         return roundColor;
     }
 
-    public void setCricleColor(int cricleColor) {
-        this.roundColor = cricleColor;
+    public void setCircleColor(int circleColor) {
+        this.roundColor = circleColor;
     }
 
-    public int getCricleProgressColor() {
+    public int getCircleProgressColor() {
         return roundProgressColor;
     }
 
-    public void setCricleProgressColor(int cricleProgressColor) {
-        this.roundProgressColor = cricleProgressColor;
+    public void setCircleProgressColor(int circleProgressColor) {
+        this.roundProgressColor = circleProgressColor;
     }
 
     public float getRoundWidth() {

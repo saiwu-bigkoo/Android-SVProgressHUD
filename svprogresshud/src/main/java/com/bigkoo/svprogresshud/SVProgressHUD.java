@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
  */
 public class SVProgressHUD {
     private Context context;
-    private static SVProgressHUD mSVProgressHUD;
     private static final long DISMISSDELAYED = 1000;
     private SVProgressHUDMaskType mSVProgressHUDMaskType;
 
@@ -44,21 +43,13 @@ public class SVProgressHUD {
     private Animation inAnim;
     private int gravity = Gravity.CENTER;
 
-    private static final SVProgressHUD getInstance(Context context) {
-        if (mSVProgressHUD == null) {
-            mSVProgressHUD = new SVProgressHUD();
-            mSVProgressHUD.context = context;
-            mSVProgressHUD.gravity = Gravity.CENTER;
-            mSVProgressHUD.initViews();
-            mSVProgressHUD.initDefaultView();
-            mSVProgressHUD.initAnimation();
-        }
-        if (context != null && context != mSVProgressHUD.context ){
-            mSVProgressHUD.context = context;
-            mSVProgressHUD.initViews();
-        }
-
-        return mSVProgressHUD;
+    
+    public SVProgressHUD(Context context){
+        this.context = context;
+        gravity = Gravity.CENTER;
+        initViews();
+        initDefaultView();
+        initAnimation();
     }
 
     protected void initViews() {
@@ -105,84 +96,84 @@ public class SVProgressHUD {
 
     }
 
-    public static void show(Context context) {
-        getInstance(context).setMaskType(SVProgressHUDMaskType.Black);
-        getInstance(context).mSharedView.show();
-        getInstance(context).svShow();
+    public void show() {
+        setMaskType(SVProgressHUDMaskType.Black);
+        mSharedView.show();
+        svShow();
     }
 
-    public static void showWithMaskType(Context context,SVProgressHUDMaskType maskType) {
+    public void showWithMaskType(SVProgressHUDMaskType maskType) {
         //判断maskType
-        getInstance(context).setMaskType(maskType);
-        getInstance(context).mSharedView.show();
-        getInstance(context).svShow();
+        setMaskType(maskType);
+        mSharedView.show();
+        svShow();
     }
 
-    public static void showWithStatus(Context context,String string) {
-        getInstance(context).setMaskType(SVProgressHUDMaskType.Black);
-        getInstance(context).mSharedView.showWithStatus(string);
-        getInstance(context).svShow();
+    public void showWithStatus(String string) {
+        setMaskType(SVProgressHUDMaskType.Black);
+        mSharedView.showWithStatus(string);
+        svShow();
     }
 
-    public static void showWithStatus(Context context,String string, SVProgressHUDMaskType maskType) {
-        getInstance(context).setMaskType(maskType);
-        getInstance(context).mSharedView.showWithStatus(string);
-        getInstance(context).svShow();
+    public void showWithStatus(String string, SVProgressHUDMaskType maskType) {
+        setMaskType(maskType);
+        mSharedView.showWithStatus(string);
+        svShow();
     }
 
-    public static void showInfoWithStatus(Context context,String string) {
-        getInstance(context).setMaskType(SVProgressHUDMaskType.Black);
-        getInstance(context).mSharedView.showInfoWithStatus(string);
-        getInstance(context).svShow();
-        getInstance(context).scheduleDismiss();
+    public void showInfoWithStatus(String string) {
+        setMaskType(SVProgressHUDMaskType.Black);
+        mSharedView.showInfoWithStatus(string);
+        svShow();
+        scheduleDismiss();
     }
 
-    public static void showInfoWithStatus(Context context,String string, SVProgressHUDMaskType maskType) {
-        getInstance(context).setMaskType(maskType);
-        getInstance(context).mSharedView.showInfoWithStatus(string);
-        getInstance(context).svShow();
-        getInstance(context).scheduleDismiss();
+    public void showInfoWithStatus(String string, SVProgressHUDMaskType maskType) {
+        setMaskType(maskType);
+        mSharedView.showInfoWithStatus(string);
+        svShow();
+        scheduleDismiss();
     }
 
-    public static void showSuccessWithStatus(Context context,String string) {
-        getInstance(context).setMaskType(SVProgressHUDMaskType.Black);
-        getInstance(context).mSharedView.showSuccessWithStatus(string);
-        getInstance(context).svShow();
-        getInstance(context).scheduleDismiss();
+    public void showSuccessWithStatus(String string) {
+        setMaskType(SVProgressHUDMaskType.Black);
+        mSharedView.showSuccessWithStatus(string);
+        svShow();
+        scheduleDismiss();
     }
 
-    public static void showSuccessWithStatus(Context context,String string, SVProgressHUDMaskType maskType) {
-        getInstance(context).setMaskType(maskType);
-        getInstance(context).mSharedView.showSuccessWithStatus(string);
-        getInstance(context).svShow();
-        getInstance(context).scheduleDismiss();
+    public void showSuccessWithStatus(String string, SVProgressHUDMaskType maskType) {
+        setMaskType(maskType);
+        mSharedView.showSuccessWithStatus(string);
+        svShow();
+        scheduleDismiss();
     }
 
-    public static void showErrorWithStatus(Context context,String string) {
-        getInstance(context).setMaskType(SVProgressHUDMaskType.Black);
-        getInstance(context).mSharedView.showErrorWithStatus(string);
-        getInstance(context).svShow();
-        getInstance(context).scheduleDismiss();
+    public void showErrorWithStatus(String string) {
+        setMaskType(SVProgressHUDMaskType.Black);
+        mSharedView.showErrorWithStatus(string);
+        svShow();
+        scheduleDismiss();
     }
 
-    public static void showErrorWithStatus(Context context,String string, SVProgressHUDMaskType maskType) {
-        getInstance(context).setMaskType(maskType);
-        getInstance(context).mSharedView.showErrorWithStatus(string);
-        getInstance(context).svShow();
-        getInstance(context).scheduleDismiss();
+    public void showErrorWithStatus(String string, SVProgressHUDMaskType maskType) {
+        setMaskType(maskType);
+        mSharedView.showErrorWithStatus(string);
+        svShow();
+        scheduleDismiss();
     }
 
-    public static void showWithProgress(Context context,String string, SVProgressHUDMaskType maskType) {
-        getInstance(context).setMaskType(maskType);
-        getInstance(context).mSharedView.showWithProgress(string);
-        getInstance(context).svShow();
+    public void showWithProgress(String string, SVProgressHUDMaskType maskType) {
+        setMaskType(maskType);
+        mSharedView.showWithProgress(string);
+        svShow();
     }
 
-    public static SVCircleProgressBar getProgressBar(Context context){
-        return getInstance(context).mSharedView.getCircleProgressBar();
+    public SVCircleProgressBar getProgressBar(){
+        return mSharedView.getCircleProgressBar();
     }
-    public static void setText(Context context,String string){
-        getInstance(context).mSharedView.setText(string);
+    public void setText(String string){
+        mSharedView.setText(string);
     }
 
     private void setMaskType(SVProgressHUDMaskType maskType) {
@@ -229,14 +220,6 @@ public class SVProgressHUD {
      */
     public boolean isShowing() {
         return rootView.getParent() != null;
-    }
-
-    public static boolean isShowing(Context context) {
-        return getInstance(context).rootView.getParent() != null;
-    }
-
-    public static void dismiss(Context context) {
-        getInstance(context).dismiss();
     }
 
     public void dismiss() {
