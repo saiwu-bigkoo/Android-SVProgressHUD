@@ -21,3 +21,4 @@ new SVProgressHUD(context).showInfoWithStatus(context, "这是提示");
 
 >v1.0.1 
  - 修复内存泄漏问题  <br />
+ - 支持更低的系统版本  <br />
