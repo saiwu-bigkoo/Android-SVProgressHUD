@@ -7,7 +7,7 @@ SVProgressHUD For Android
 
 demo是用Module方式依赖，你也可以使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:svprogresshud:1.0.1'
+   compile 'com.bigkoo:svprogresshud:1.0.2'
 ```
 
 ### config in java code
@@ -19,6 +19,6 @@ new SVProgressHUD(context).showInfoWithStatus(context, "这是提示");
 
 >## 更新说明
 
->v1.0.1 
+>v1.0.2
  - 修复内存泄漏问题  <br />
  - 支持更低的系统版本  <br />
