@@ -306,7 +306,7 @@ public class SVProgressHUD {
     }
 
     public OnDismissListener getOnDismissListener(){
-        return this.onDismissListener();
+        return this.onDismissListener;
     }
 
     public interface OnDismissListener{

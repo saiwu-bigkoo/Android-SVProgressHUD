@@ -39,10 +39,10 @@ public class MainActivity extends Activity {
     }
     public void showSuccessWithStatus(View view){
         mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
-        mSVProgressHUD.setOnDismissListener(new OnDismissListener(){
+        mSVProgressHUD.setOnDismissListener(new SVProgressHUD.OnDismissListener(){
             @Override
             public void onDismiss() {
-                // todo someting, like: finish current activity
+                // todo something, like: finish current activity
             }
         });
     }
