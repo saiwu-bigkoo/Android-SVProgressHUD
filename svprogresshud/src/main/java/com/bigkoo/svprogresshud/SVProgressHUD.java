@@ -42,6 +42,7 @@ public class SVProgressHUD {
     private Animation outAnim;
     private Animation inAnim;
     private int gravity = Gravity.CENTER;
+    private OnDismissListener onDismissListener;
 
     
     public SVProgressHUD(Context context){
@@ -226,6 +227,7 @@ public class SVProgressHUD {
         //消失动画
         outAnim.setAnimationListener(outAnimListener);
         mSharedView.startAnimation(outAnim);
+        getOnDismissListener().onDismiss();
     }
 
     public void dismissImmediately() {
@@ -298,4 +300,17 @@ public class SVProgressHUD {
 
         }
     };
+
+    public void setOnDismissListener(OnDismissListener listener){
+        this.onDismissListener = listener;
+    }
+
+    public OnDismissListener getOnDismissListener(){
+        return this.onDismissListener();
+    }
+
+    public interface OnDismissListener{
+        void onDismiss();
+    }
+
 }

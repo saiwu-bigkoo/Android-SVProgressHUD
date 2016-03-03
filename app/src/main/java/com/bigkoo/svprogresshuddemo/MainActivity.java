@@ -39,6 +39,12 @@ public class MainActivity extends Activity {
     }
     public void showSuccessWithStatus(View view){
         mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
+        mSVProgressHUD.setOnDismissListener(new OnDismissListener(){
+            @Override
+            public void onDismiss() {
+                // todo someting, like: finish current activity
+            }
+        });
     }
     public void showErrorWithStatus(View view){
         mSVProgressHUD.showErrorWithStatus("不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
