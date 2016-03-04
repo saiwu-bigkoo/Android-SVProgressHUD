@@ -227,7 +227,10 @@ public class SVProgressHUD {
         //消失动画
         outAnim.setAnimationListener(outAnimListener);
         mSharedView.startAnimation(outAnim);
-        getOnDismissListener().onDismiss();
+        if(getOnDismissListener() != null){
+            getOnDismissListener().onDismiss();
+        }
+
     }
 
     public void dismissImmediately() {
