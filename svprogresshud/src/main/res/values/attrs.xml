@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <declare-styleable name="SVCircleProgressBar">
-        <attr name="roundColor" format="color"/>
-        <attr name="roundProgressColor" format="color"/>
-        <attr name="roundWidth" format="dimension"></attr>
-        <attr name="max" format="integer"></attr>
-        <attr name="style">
+        <attr name="svprogress_roundColor" format="color"/>
+        <attr name="svprogress_roundProgressColor" format="color"/>
+        <attr name="svprogress_roundWidth" format="dimension"></attr>
+        <attr name="svprogress_max" format="integer"></attr>
+        <attr name="svprogress_style">
             <enum name="STROKE" value="0"></enum>
             <enum name="FILL" value="1"></enum>
         </attr>

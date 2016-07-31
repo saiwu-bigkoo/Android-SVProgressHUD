@@ -1,4 +1,4 @@
-package com.bigkoo.svprogresshud;
+package com.bigkoo.svprogresshud.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bigkoo.svprogresshud.R;
 
 /**
  * Created by Sai on 15/8/15.

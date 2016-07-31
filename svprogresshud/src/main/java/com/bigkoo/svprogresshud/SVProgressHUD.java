@@ -13,6 +13,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
+import com.bigkoo.svprogresshud.listener.OnDismissListener;
+import com.bigkoo.svprogresshud.view.SVCircleProgressBar;
+import com.bigkoo.svprogresshud.view.SVProgressDefaultView;
+
 /**
  * Created by Sai on 15/8/15.
  */
@@ -20,6 +24,7 @@ public class SVProgressHUD {
     private Context context;
     private static final long DISMISSDELAYED = 1000;
     private SVProgressHUDMaskType mSVProgressHUDMaskType;
+    private boolean isShowing;
 
     public enum SVProgressHUDMaskType {
         None,  // 允许遮罩下面控件点击
@@ -78,6 +83,7 @@ public class SVProgressHUD {
      * show的时候调用
      */
     private void onAttached() {
+        isShowing = true;
         decorView.addView(rootView);
         if(mSharedView.getParent()!=null)((ViewGroup)mSharedView.getParent()).removeView(mSharedView);
         rootView.addView(mSharedView);
@@ -196,11 +202,9 @@ public class SVProgressHUD {
                 configMaskType(R.color.bgColor_overlay, true, true);
                 break;
             case Gradient:
-                //TODO 设置半透明渐变背景
                 configMaskType(R.drawable.bg_overlay_gradient, true, false);
                 break;
             case GradientCancel:
-                //TODO 设置半透明渐变背景
                 configMaskType(R.drawable.bg_overlay_gradient, true, true);
                 break;
             default:
@@ -220,15 +224,15 @@ public class SVProgressHUD {
      * @return 如果视图已经存在该View返回true
      */
     public boolean isShowing() {
-        return rootView.getParent() != null;
+        return rootView.getParent() != null && isShowing;
     }
 
     public void dismiss() {
         //消失动画
         outAnim.setAnimationListener(outAnimListener);
         mSharedView.startAnimation(outAnim);
-        if(getOnDismissListener() != null){
-            getOnDismissListener().onDismiss();
+        if(onDismissListener != null){
+            onDismissListener.onDismiss(this);
         }
 
     }
@@ -238,6 +242,7 @@ public class SVProgressHUD {
         rootView.removeView(mSharedView);
         decorView.removeView(rootView);
         context = null;
+        isShowing = false;
     }
 
     public Animation getInAnimation() {
@@ -309,11 +314,7 @@ public class SVProgressHUD {
     }
 
     public OnDismissListener getOnDismissListener(){
-        return this.onDismissListener;
-    }
-
-    public interface OnDismissListener{
-        void onDismiss();
+        return onDismissListener;
     }
 
 }

@@ -6,8 +6,10 @@ import android.os.Message;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.bigkoo.svprogresshud.listener.OnDismissListener;
 
 public class MainActivity extends Activity {
     private SVProgressHUD mSVProgressHUD;
@@ -17,6 +19,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mSVProgressHUD = new SVProgressHUD(this);
+        mSVProgressHUD.setOnDismissListener(new OnDismissListener(){
+            @Override
+            public void onDismiss(SVProgressHUD hud) {
+                // todo something, like: finish current activity
+                Toast.makeText(getApplicationContext(),"dismiss",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     public void show(View view){
@@ -39,12 +49,6 @@ public class MainActivity extends Activity {
     }
     public void showSuccessWithStatus(View view){
         mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
-        mSVProgressHUD.setOnDismissListener(new SVProgressHUD.OnDismissListener(){
-            @Override
-            public void onDismiss() {
-                // todo something, like: finish current activity
-            }
-        });
     }
     public void showErrorWithStatus(View view){
         mSVProgressHUD.showErrorWithStatus("不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);

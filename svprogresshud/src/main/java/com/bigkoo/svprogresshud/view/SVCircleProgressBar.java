@@ -1,4 +1,4 @@
-package com.bigkoo.svprogresshud;
+package com.bigkoo.svprogresshud.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,11 +9,12 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.bigkoo.svprogresshud.R;
+
 /**
  * Created by Sai on 15/9/1.
  */
 public class SVCircleProgressBar extends View {
-    private Context mContext;
     /**
      * 画笔对象的引用
      */
@@ -54,18 +55,14 @@ public class SVCircleProgressBar extends View {
 
     public SVCircleProgressBar(Context context) {
         this(context, null);
-        this.mContext = context;
-
     }
 
     public SVCircleProgressBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        this.mContext = context;
     }
 
     public SVCircleProgressBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.mContext = context;
 
         paint = new Paint();
 
@@ -73,12 +70,12 @@ public class SVCircleProgressBar extends View {
                 R.styleable.SVCircleProgressBar);
 
         // 获取自定义属性和默认值
-        roundColor = mTypedArray.getColor(R.styleable.SVCircleProgressBar_roundColor, Color.BLUE);
-        roundProgressColor = mTypedArray.getColor(R.styleable.SVCircleProgressBar_roundProgressColor,
+        roundColor = mTypedArray.getColor(R.styleable.SVCircleProgressBar_svprogress_roundColor, Color.BLUE);
+        roundProgressColor = mTypedArray.getColor(R.styleable.SVCircleProgressBar_svprogress_roundProgressColor,
                 Color.GRAY);
-        roundWidth = mTypedArray.getDimension(R.styleable.SVCircleProgressBar_roundWidth, 5);
-        max = mTypedArray.getInteger(R.styleable.SVCircleProgressBar_max, 100);
-        style = mTypedArray.getInt(R.styleable.SVCircleProgressBar_style, 0);
+        roundWidth = mTypedArray.getDimension(R.styleable.SVCircleProgressBar_svprogress_roundWidth, 5);
+        max = mTypedArray.getInteger(R.styleable.SVCircleProgressBar_svprogress_max, 100);
+        style = mTypedArray.getInt(R.styleable.SVCircleProgressBar_svprogress_style, 0);
 
         mTypedArray.recycle();
     }
