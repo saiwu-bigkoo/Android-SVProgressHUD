@@ -17,11 +17,13 @@ import com.bigkoo.svprogresshud.listener.OnDismissListener;
 import com.bigkoo.svprogresshud.view.SVCircleProgressBar;
 import com.bigkoo.svprogresshud.view.SVProgressDefaultView;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by Sai on 15/8/15.
  */
 public class SVProgressHUD {
-    private Context context;
+    private WeakReference<Context> contextWeak;
     private static final long DISMISSDELAYED = 1000;
     private SVProgressHUDMaskType mSVProgressHUDMaskType;
     private boolean isShowing;
@@ -51,7 +53,7 @@ public class SVProgressHUD {
 
     
     public SVProgressHUD(Context context){
-        this.context = context;
+        this.contextWeak = new WeakReference<>(context);
         gravity = Gravity.CENTER;
         initViews();
         initDefaultView();
@@ -59,6 +61,9 @@ public class SVProgressHUD {
     }
 
     protected void initViews() {
+        Context context = contextWeak.get();
+        if(context == null) return;
+
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_svprogresshud, null, false);
@@ -67,6 +72,9 @@ public class SVProgressHUD {
         ));
     }
     protected void initDefaultView(){
+        Context context = contextWeak.get();
+        if(context == null) return;
+
         mSharedView = new SVProgressDefaultView(context);
         params.gravity = gravity;
         mSharedView.setLayoutParams(params);
@@ -104,6 +112,7 @@ public class SVProgressHUD {
     }
 
     public void show() {
+
         setMaskType(SVProgressHUDMaskType.Black);
         mSharedView.show();
         svShow();
@@ -231,26 +240,31 @@ public class SVProgressHUD {
         //消失动画
         outAnim.setAnimationListener(outAnimListener);
         mSharedView.startAnimation(outAnim);
-        if(onDismissListener != null){
-            onDismissListener.onDismiss(this);
-        }
-
     }
 
     public void dismissImmediately() {
         mSharedView.dismiss();
         rootView.removeView(mSharedView);
         decorView.removeView(rootView);
-        context = null;
         isShowing = false;
+        if(onDismissListener != null){
+            onDismissListener.onDismiss(this);
+        }
+
     }
 
     public Animation getInAnimation() {
+        Context context = contextWeak.get();
+        if(context == null) return null;
+
         int res = SVProgressHUDAnimateUtil.getAnimationResource(this.gravity, true);
         return AnimationUtils.loadAnimation(context, res);
     }
 
     public Animation getOutAnimation() {
+        Context context = contextWeak.get();
+        if(context == null) return null;
+
         int res = SVProgressHUDAnimateUtil.getAnimationResource(this.gravity, false);
         return AnimationUtils.loadAnimation(context, res);
     }
@@ -292,7 +306,7 @@ public class SVProgressHUD {
         }
     };
 
-    Animation.AnimationListener outAnimListener = new Animation.AnimationListener() {
+    private Animation.AnimationListener outAnimListener = new Animation.AnimationListener() {
         @Override
         public void onAnimationStart(Animation animation) {
 
