@@ -27,6 +27,7 @@ public class SVProgressHUD {
     private static final long DISMISSDELAYED = 1000;
     private SVProgressHUDMaskType mSVProgressHUDMaskType;
     private boolean isShowing;
+    private boolean isDismissing;
 
     public enum SVProgressHUDMaskType {
         None,  // 允许遮罩下面控件点击
@@ -103,22 +104,21 @@ public class SVProgressHUD {
     private void svShow() {
 
         mHandler.removeCallbacksAndMessages(null);
-        if (!isShowing()) {
-            onAttached();
-        }
+        onAttached();
 
         mSharedView.startAnimation(inAnim);
 
     }
 
     public void show() {
-
+        if(isShowing())return;
         setMaskType(SVProgressHUDMaskType.Black);
         mSharedView.show();
         svShow();
     }
 
     public void showWithMaskType(SVProgressHUDMaskType maskType) {
+        if(isShowing())return;
         //判断maskType
         setMaskType(maskType);
         mSharedView.show();
@@ -126,18 +126,21 @@ public class SVProgressHUD {
     }
 
     public void showWithStatus(String string) {
+        if(isShowing())return;
         setMaskType(SVProgressHUDMaskType.Black);
         mSharedView.showWithStatus(string);
         svShow();
     }
 
     public void showWithStatus(String string, SVProgressHUDMaskType maskType) {
+        if(isShowing())return;
         setMaskType(maskType);
         mSharedView.showWithStatus(string);
         svShow();
     }
 
     public void showInfoWithStatus(String string) {
+        if(isShowing())return;
         setMaskType(SVProgressHUDMaskType.Black);
         mSharedView.showInfoWithStatus(string);
         svShow();
@@ -145,6 +148,7 @@ public class SVProgressHUD {
     }
 
     public void showInfoWithStatus(String string, SVProgressHUDMaskType maskType) {
+        if(isShowing())return;
         setMaskType(maskType);
         mSharedView.showInfoWithStatus(string);
         svShow();
@@ -152,6 +156,7 @@ public class SVProgressHUD {
     }
 
     public void showSuccessWithStatus(String string) {
+        if(isShowing())return;
         setMaskType(SVProgressHUDMaskType.Black);
         mSharedView.showSuccessWithStatus(string);
         svShow();
@@ -159,6 +164,7 @@ public class SVProgressHUD {
     }
 
     public void showSuccessWithStatus(String string, SVProgressHUDMaskType maskType) {
+        if(isShowing())return;
         setMaskType(maskType);
         mSharedView.showSuccessWithStatus(string);
         svShow();
@@ -166,6 +172,7 @@ public class SVProgressHUD {
     }
 
     public void showErrorWithStatus(String string) {
+        if(isShowing())return;
         setMaskType(SVProgressHUDMaskType.Black);
         mSharedView.showErrorWithStatus(string);
         svShow();
@@ -173,6 +180,7 @@ public class SVProgressHUD {
     }
 
     public void showErrorWithStatus(String string, SVProgressHUDMaskType maskType) {
+        if(isShowing())return;
         setMaskType(maskType);
         mSharedView.showErrorWithStatus(string);
         svShow();
@@ -180,6 +188,7 @@ public class SVProgressHUD {
     }
 
     public void showWithProgress(String string, SVProgressHUDMaskType maskType) {
+        if(isShowing())return;
         setMaskType(maskType);
         mSharedView.showWithProgress(string);
         svShow();
@@ -233,12 +242,15 @@ public class SVProgressHUD {
      * @return 如果视图已经存在该View返回true
      */
     public boolean isShowing() {
-        return rootView.getParent() != null && isShowing;
+        return rootView.getParent() != null || isShowing;
     }
 
     public void dismiss() {
+        if(isDismissing)return;
+        isDismissing = true;
         //消失动画
         outAnim.setAnimationListener(outAnimListener);
+        mSharedView.dismiss();
         mSharedView.startAnimation(outAnim);
     }
 
@@ -247,6 +259,7 @@ public class SVProgressHUD {
         rootView.removeView(mSharedView);
         decorView.removeView(rootView);
         isShowing = false;
+        isDismissing = false;
         if(onDismissListener != null){
             onDismissListener.onDismiss(this);
         }
